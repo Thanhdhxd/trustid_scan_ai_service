@@ -134,7 +134,7 @@ def risk_score(event: ScanEvent):
     minutes_since_prev = max((event_time - prev_time).total_seconds() / 60, 0)
     scan_count = prev_scan_count + 1
 
-    implied_speed = distance_km / (minutes_since_prev if minutes_since_prev > 0 else 0.1)
+    implied_speed = (distance_km * 60.0) / (minutes_since_prev if minutes_since_prev > 0 else 0.1)
 
     features = pd.DataFrame(
         [[distance_km, minutes_since_prev, implied_speed, scan_count]],

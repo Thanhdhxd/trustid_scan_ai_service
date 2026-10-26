@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,6 +7,12 @@ import joblib
 import json
 from geopy.distance import geodesic
 import os
+
+if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 
 # Create an output directory for the plots
 os.makedirs("evaluation_results", exist_ok=True)
@@ -27,7 +34,7 @@ def calc_distance(row):
 df["distance_km"] = df.apply(calc_distance, axis=1)
 df["minutes_since_prev"] = ((df["timestamp"] - df["prev_time"]).dt.total_seconds() / 60)
 df["minutes_since_prev"] = df["minutes_since_prev"].fillna(999999)
-df["implied_speed"] = df["distance_km"] / df["minutes_since_prev"].replace(0, 0.1)
+df["implied_speed"] = (df["distance_km"] * 60.0) / df["minutes_since_prev"].replace(0, 0.1)
 df["scan_count"] = df.groupby("code")["code"].transform("count")
 
 feature_cols = ["distance_km", "minutes_since_prev", "implied_speed", "scan_count"]
