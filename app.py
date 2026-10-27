@@ -155,7 +155,9 @@ def risk_score(event: ScanEvent):
         reasons.append(f"Tốc độ di chuyển bất khả thi ({round(implied_speed, 1)} km/h)")
     if distance_km > 1000 and minutes_since_prev < 60:
         reasons.append(f"Khoảng cách quá xa trong thời gian ngắn ({round(distance_km, 1)} km / {round(minutes_since_prev, 1)} phút)")
-    if scan_count > 50:
+    if scan_count >= 10 and minutes_since_prev <= 5:
+        reasons.append(f"Mã bị quét dồn dập liên tục ({scan_count} lần trong thời gian ngắn)")
+    elif scan_count > 50:
         reasons.append(f"Sản phẩm bị quét quá nhiều lần ({scan_count} lần)")
 
     # Hybrid system logic

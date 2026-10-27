@@ -43,8 +43,10 @@ Xem API docs tự động (Swagger UI): `http://127.0.0.1:8000/docs`
 python test_scenarios.py
 ```
 
-Chạy 5 kịch bản (bình thường / quét ở 2 tỉnh cách xa nhau trong thời gian
-ngắn / tần suất quét quá cao...) và so sánh kết quả model với kỳ vọng.
+Chạy 6 kịch bản kiểm thử bao gồm đầy đủ 3 cấp độ:
+- `NORMAL` (bình thường): Quét lần đầu, quét lần 2 cùng khu vực cách nhau vài giờ.
+- `WATCH` (cảnh báo vàng - nghi vấn): Quét ở 2 quận khác nhau trong cùng TP (~4.2 km trong 15 phút, tốc độ xe máy).
+- `HIGH_RISK` (cảnh báo đỏ - giả mạo): Quét HN -> HCM 5 phút, HN -> Đà Nẵng 20 phút, quét dồn dập 15 lần/15 phút.
 
 ## API
 
