@@ -96,6 +96,7 @@ def health_check():
 
 @app.post("/risk-score", response_model=RiskResult)
 def risk_score(event: ScanEvent):
+    print(f"--> [REQ] code={event.code}, lat={event.lat}, long={event.long}")
     try:
         event_time = datetime.fromisoformat(event.timestamp)
     except ValueError:
